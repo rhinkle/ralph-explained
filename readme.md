@@ -44,7 +44,7 @@ done
 
 
 
-## First Time Setup
+## Automated Setup Steps - Claude Default
 1. **Clone the Repository**: Start by cloning the Ralph Loop repository to your local machine.
 2. **Copy scripts/ralph Folder**: Copy the `scripts/ralph` folder from the cloned repository to your project directory where you want to run the Ralph Loop.
 3. **Install AI Skills**: Ensure you have the PRD and ralph skills installed and accessible in your environment. Check your AI cli tool documentation for skill installation instructions. However most of the time this would be in your project folder under .github/skills or .claude/skills
@@ -66,3 +66,111 @@ done
    ``` 
 6. Done.
 
+
+## Usage
+
+1. Create a PRD using the PRD skill.
+```bash
+claude 
+
+/prd-local Create a PRD for an application for mac os that can monitor the mic audio and feed it back into my headset. This should be able to toggle on and off and set how much feedback like a volume slider. Use python for the tech.
+```
+
+Claude Will ask you some questions to clarify the requirements. Example:
+```
+1. What is the primary use case for this mic monitoring?
+  - A. Hearing yourself while recording (podcasting, streaming, music)
+  - B. Communication feedback during calls/meetings
+  - C. Accessibility/hearing aid use case
+  - D. General monitoring for any purpose
+
+  2. What type of interface do you want?
+  - A. Menu bar app only (minimal, lives in the top bar)
+  - B. Small floating window with controls
+  - C. Full application window
+  - D. System tray with popup controls
+
+  3. Should it remember settings between sessions?
+  - A. Yes, persist last used input/output devices and volume
+  - B. Yes, but only volume level
+  - C. No, always start fresh with defaults
+  - D. Let user choose in preferences
+
+  4. Audio device selection:
+  - A. Let user pick specific input mic and output headset from lists
+  - B. Just use system default input and output
+  - C. Let user pick input only, always use default output
+  - D. Both options (default with ability to override)
+
+  5. Any additional features needed?
+  - A. Just toggle and volume - keep it simple
+  - B. Add latency adjustment control
+  - C. Add keyboard shortcut for toggle
+  - D. Multiple of the above (please specify which)
+
+  Please respond with your choices (e.g., "1A, 2A, 3A, 4D, 5C").
+  ```
+
+2. Convert the PRD to json user stories using the ralph skill.
+```bash
+/ralph-local convert @tasks/prd-mic-monitor.md to prd.json
+```
+
+3. Run the Ralph Loop script to start processing the user stories and generating code.
+```
+./scripts/ralph/ralph.sh
+---
+
+═══════════════════════════════════════════════════════
+  Ralph Iteration 1 of 10
+═══════════════════════════════════════════════════════
+US-001 is complete. There are still 9 more stories with `passes: false` (US-002 through US-010), so I'm done with this iteration.
+
+**Summary of US-001 completion:**
+- Initialized git repo on branch `ralph/mic-monitor`
+- Created `requirements.txt` with rumps, sounddevice, numpy
+- Created `mic_monitor.py` as main entry point
+- Created empty `audio_engine.py` and `settings.py` modules
+- Typecheck passes with mypy
+- Committed all changes and updated PRD to mark US-001 as complete
+- Created progress.txt with codebase patterns and initial progress log
+Iteration 1 complete. Continuing...
+
+═══════════════════════════════════════════════════════
+  Ralph Iteration 2 of 10
+═══════════════════════════════════════════════════════
+US-002 is complete. The remaining untracked files (scripts/ and tasks/) are not part of this story.
+
+Looking at the PRD, there are still 8 more user stories with `passes: false` (US-003 through US-010), so another iteration will pick up the next story.
+
+**Summary of US-002 completion:**
+- Implemented `SettingsManager` class in `settings.py` with:
+  - Settings stored at `~/Library/Application Support/MicMonitor/config.json`
+  - Default values: volume=50, latency_ms=20, monitoring_enabled=False
+  - `load()` method that reads config or returns defaults
+  - `save()` method that writes settings to config file
+  - Property accessors with validation
+- Typecheck passes
+- Committed with message: `feat: [US-002] - Settings manager module`
+- Updated PRD and progress.txt
+Iteration 2 complete. Continuing...
+
+═══════════════════════════════════════════════════════
+  Ralph Iteration 3 of 10
+═══════════════════════════════════════════════════════
+US-003 is complete. Looking at the PRD, there are still 7 more stories with `passes: false` (US-004 through US-010), so I'll end my response here for the next iteration to pick up US-004.
+
+**Summary of US-003 completion:**
+- Implemented `AudioEngine` class with:
+  - `start()` - begins audio passthrough using sounddevice.Stream with callback
+  - `stop()` - stops and closes stream cleanly
+  - `set_volume(0-100)` - adjusts gain in real-time
+  - Uses system default input/output devices
+- Typecheck passes
+- Committed: `feat: [US-003] - Audio engine with passthrough`
+- Updated PRD (`passes: true`) and progress.txt
+Iteration 3 complete. Continuing...
+
+```
+
+4. Review the generated code and make any necessary adjustments. You can rerun the Ralph Loop script as needed to continue processing remaining user stories until all tasks are complete.
