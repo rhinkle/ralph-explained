@@ -1,11 +1,24 @@
 # Ralph Loop - Explained
 
+## What Problem Does Ralph Loop Solve?
+
+Context rot occurs when an AI coding tools have gather so much context that it loses track of the overall task due to the complexity or length of the prompt/ conversation. This can lead to incomplete or incorrect outputs. The Ralph Loop addresses this by breaking down tasks into smaller, manageable user stories and iteratively processing them. Each iteration creates a new instance with a fresh context which focuses on completing one user story at a time, allowing the AI to maintain context and deliver accurate results. This method stores important state information for next instance to pick up from where it left off within a progress file so that each iteration builds upon the last with only the necessary context.
+
 ## What is a Ralph Loop?
 
 A Ralph Loop is a method of using an AI CLI tool (like Claude or GPT-4) to iteratively process tasks defined in a prompt file. The loop continues until the AI indicates that all tasks are complete or a maximum number of iterations is reached.
 
-The Ralph loop alone is neat basic programming concept, but it can be combined with other tools and scripts to create powerful automation workflows.
+The Ralph loop alone is neat basic programming concept, but it can be combined with other skills and scripts to create powerful automation workflows.
 
+### Simple
+```bash
+#!/bin/bash
+for i in {1..10}; do
+  claude -p prompt.md
+done
+```
+
+### Real
 ```
 bash
 MAX_ITERATIONS=10
@@ -26,6 +39,10 @@ for i in $(seq 1 $MAX_ITERATIONS); do
   sleep 2
 done
 ```
+
+### Is Ralph Loop the only workflow/Process to solve this problem?
+
+Nope there are many other tools like [Get Shit Done](https://github.com/glittercowboy/get-shit-done). Make makes workflows like this one powerful is the steps and prompts that help AI tools find the right information for the task at hand.
 
 
 ## User Workflow
