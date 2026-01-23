@@ -1,5 +1,7 @@
 # Ralph Loop - Explained
 
+[Presentation One Pager](docs/ralph-one-pager.md)
+
 ## What Problem Does Ralph Loop Solve?
 
 Context rot occurs when an AI coding tools have gather so much context that it loses track of the overall task due to the complexity or length of the prompt/ conversation. This can lead to incomplete or incorrect outputs. The Ralph Loop addresses this by breaking down tasks into smaller, manageable user stories and iteratively processing them. Each iteration creates a new instance with a fresh context which focuses on completing one user story at a time, allowing the AI to maintain context and deliver accurate results. This method stores important state information for next instance to pick up from where it left off within a progress file so that each iteration builds upon the last with only the necessary context.
