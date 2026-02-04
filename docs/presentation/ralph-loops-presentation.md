@@ -9,7 +9,7 @@ paginate: true
 
 ## Agenda
 
-1. What problem does this solve?
+1. What problem does this solve for autonomous tasks?
 2. What is a Ralph Loop?
 3. Extending the concept to your workflows
 
@@ -57,17 +57,17 @@ Instead of one long conversation, you get many focused ones.
 ### The Core Idea
 <style scoped>
 section {
-  font-size: 2.5em;
+  font-size: 2em;
 }
 </style>
 ```
 ┌────────────────────────────────────────────────────┐
 │                                                    │
 │   Task List ──► Fresh AI ──► Complete 1 Task       │
-│       │              │              │              │
-│       │              │              ▼              │
-│       │              │        Update Progress      │
-│       │              ▼              │              │
+│       │                             │              │
+│       │                             ▼              │
+│       │                    Update Progress.txt     │
+│       │                             │              │
 │       └──────── Next Iteration ◄────┘              │
 │                                                    │
 └────────────────────────────────────────────────────┘
@@ -180,9 +180,9 @@ Since it loops, you only define the steps once.
 
 ---
 
-## Real World Example: Building Features
+### Real World Example: Building Features
 
-### Step 1: Define Requirements (PRD Skill)
+#### Step 1: Define Requirements (PRD Skill)
 
 ```bash
 /prd Create a PRD for a mic monitoring app
@@ -190,6 +190,14 @@ Since it loops, you only define the steps once.
 
 The AI asks clarifying questions and generates a detailed spec.
 
+---
+### Quick Note: Agent Skills
+
+AI Skills or Claude Skills are local, reusable procedures that instruct agents how to perform specific workflows.
+
+- Code-Reviewer: reviews code for best practices.
+- Skill-Creator: helps you make custom AI skills.
+- Copilot CLI, Gemini CLI, Claude CLI all support skills.
 ---
 
 ### Step 2: Convert to Tasks (Ralph Skill)
@@ -236,10 +244,10 @@ US-002 complete. Implemented SettingsManager class...
 
 ### The Result
 
+- Progress is visible and resumable
 - Clean git history with atomic commits per story
 - Each feature independently testable
-- Progress is visible and resumable
-- Works overnight or during meetings
+- Works overnight or while working on other tasks
 
 ---
 
@@ -248,13 +256,23 @@ US-002 complete. Implemented SettingsManager class...
 **Good fit:**
 - Feature development with clear requirements
 - Batch processing of similar tasks
-- Overnight code generation
 - Any workflow you can define as repeatable steps
+- Exploratory prototyping*
 
 **Not ideal for:**
-- Exploratory prototyping
+- Need for high security or compliance
 - Highly creative or ambiguous tasks
 - Quick one-off fixes
+
+---
+
+### Security & Permissions
+
+`claude --dangerously-skip-permissions`
+
+- Ralph Loops often need file system access
+- Skipping permissions prompts streamlines automation
+- Solution: Dev Containers or isolated environments
 
 ---
 
