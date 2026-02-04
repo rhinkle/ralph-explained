@@ -54,35 +54,36 @@ Instead of one long conversation, you get many focused ones.
 
 ---
 
-### The Core Idea
+### The Core Idea: Setup
+
+**Setup:**
+1. Create a PRD markdown file
+2. Convert to Ralph json file  
+3. Run Ralph Max loop iterations 10
+
+--- 
 <style scoped>
 section {
   font-size: 2em;
 }
 </style>
-```
-┌────────────────────────────────────────────────────┐
-│                                                    │
-│   Task List ──► Fresh AI ──► Complete 1 Task       │
-│       │                             │              │
-│       │                             ▼              │
-│       │                    Update Progress.txt     │
-│       │                             │              │
-│       └──────── Next Iteration ◄────┘              │
-│                                                    │
-└────────────────────────────────────────────────────┘
-```
+### The Core Idea: Loop
 
 
-Each iteration:
-- Starts fresh (no accumulated context)
-- Knows what's been done (reads progress file)
-- Completes exactly one task
-- Passes learnings forward
+**Ralph AI Code CLI Loop** (repeats until tasks complete or max iterations reached):
+
+4. Ralph Starts AI Code CLI Instance
+5. Look for next most important Tasks
+6. Implements Logic, Tests, etc
+7. Documents Learning in progress.txt
+8. **Decision Point:** Are all Tasks complete? OR Is current iteration == Max Iterations?
+   - **No** → Loop back to step 4
+   - **Yes** → Done!
+- [Ralph Loop Diagram](https://github.com/rhinkle/ralph-explained/blob/feature/create-presentation/images/ralp-loop-diagram.png)
 
 ---
 
-### How State Gets Passed
+### The Core Idea: Long-Term Memory
 
 The **progress.txt** file acts as memory between iterations.
 
@@ -152,20 +153,6 @@ Your Tasks:
 
 ---
 
-### Why This Structure Works
-
-| Step | Purpose |
-|------|---------|
-| Check tasks | Know what needs doing |
-| Read progress | Learn from past iterations |
-| Implement ONE | Stay focused, avoid context overload |
-| Run tests | Verify before moving on |
-| Update tasks | Track completion |
-| Add learnings | Help future iterations |
-| STOP | Prevent runaway execution |
-
----
-
 ### Customizing for Your Use Case
 
 The prompt is fully customizable. Add steps for:
@@ -182,6 +169,8 @@ Since it loops, you only define the steps once.
 
 ### Real World Example: Building Features
 
+---
+
 #### Step 1: Define Requirements (PRD Skill)
 
 ```bash
@@ -189,6 +178,9 @@ Since it loops, you only define the steps once.
 ```
 
 The AI asks clarifying questions and generates a detailed spec.
+
+- Any size scope - from a single feature to a full app
+- Supports new or existing applications projects
 
 ---
 ### Quick Note: Agent Skills
@@ -244,6 +236,7 @@ US-002 complete. Implemented SettingsManager class...
 
 ### The Result
 
+- Working Application
 - Progress is visible and resumable
 - Clean git history with atomic commits per story
 - Each feature independently testable
@@ -260,9 +253,9 @@ US-002 complete. Implemented SettingsManager class...
 - Exploratory prototyping*
 
 **Not ideal for:**
-- Need for high security or compliance
-- Highly creative or ambiguous tasks
 - Quick one-off fixes
+- Highly creative or ambiguous tasks
+- Need for high security or compliance
 
 ---
 
