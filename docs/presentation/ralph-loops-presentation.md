@@ -1,3 +1,8 @@
+---
+theme: uncover
+marp: true
+paginate: true
+----
 # Ralph Loops: Getting More From AI Coding Tools
 
 ---
@@ -50,7 +55,11 @@ Instead of one long conversation, you get many focused ones.
 ---
 
 ### The Core Idea
-
+<style scoped>
+section {
+  font-size: 2.5em;
+}
+</style>
 ```
 ┌────────────────────────────────────────────────────┐
 │                                                    │
@@ -58,12 +67,12 @@ Instead of one long conversation, you get many focused ones.
 │       │              │              │              │
 │       │              │              ▼              │
 │       │              │        Update Progress      │
-│       │              │              │              │
 │       │              ▼              │              │
 │       └──────── Next Iteration ◄────┘              │
 │                                                    │
 └────────────────────────────────────────────────────┘
 ```
+
 
 Each iteration:
 - Starts fresh (no accumulated context)
