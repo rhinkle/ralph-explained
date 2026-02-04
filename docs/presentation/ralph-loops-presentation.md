@@ -299,5 +299,5 @@ Simple concepts can have large impact.
 ## Questions?
 
 Resources:
-- This repo: `ralph-explained`
+- Learn More: `github.com/rhinkle/ralph-explained`
 - Similar tool: [Get Shit Done](https://github.com/glittercowboy/get-shit-done)
