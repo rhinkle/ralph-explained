@@ -12,6 +12,7 @@ ARCHIVE_DIR="$SCRIPT_DIR/archive"
 LAST_BRANCH_FILE="$SCRIPT_DIR/.last-branch"
 AI_TOOL_CMD="claude --dangerously-skip-permissions"
 # AI_TOOL_CMD="copilot --allow-all-tools"
+# AI_TOOL_CMD="gemini --yolo"
 
 # Archive previous run if branch changed
 if [ -f "$PRD_FILE" ] && [ -f "$LAST_BRANCH_FILE" ]; then

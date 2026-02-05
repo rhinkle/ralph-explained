@@ -72,6 +72,8 @@ Nope there are many other tools like [Get Shit Done](https://github.com/glitterc
 ./scripts/ralph/install.sh
 ```
 
+Update the `AI_TOOL_CMD` variable in the Ralph Loop script to match your AI CLI tool command.
+[Change AI_TOOL_CMD](scripts/ralph/ralph.sh#L13)
 
 ## Manual Setup Steps
 
