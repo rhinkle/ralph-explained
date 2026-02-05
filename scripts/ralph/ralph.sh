@@ -10,9 +10,15 @@ PRD_FILE="$SCRIPT_DIR/prd.json"
 PROGRESS_FILE="$SCRIPT_DIR/progress.txt"
 ARCHIVE_DIR="$SCRIPT_DIR/archive"
 LAST_BRANCH_FILE="$SCRIPT_DIR/.last-branch"
-AI_TOOL_CMD="claude --dangerously-skip-permissions"
-# AI_TOOL_CMD="copilot --allow-all-tools"
-# AI_TOOL_CMD="gemini --yolo"
+CONFIG_FILE="$SCRIPT_DIR/.ralph-config"
+
+# Load AI tool configuration from config file, default to Claude
+if [ -f "$CONFIG_FILE" ]; then
+  source "$CONFIG_FILE"
+else
+  echo "No config file found, defaulting to Claude AI tool."
+  AI_TOOL_CMD="claude --dangerously-skip-permissions"
+fi
 
 # Archive previous run if branch changed
 if [ -f "$PRD_FILE" ] && [ -f "$LAST_BRANCH_FILE" ]; then

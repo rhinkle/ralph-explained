@@ -4,6 +4,7 @@ set -e
 # Get the directory where this script is located
 SCRIPT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
 SKILLS_SOURCE_DIR="$SCRIPT_DIR/skills"
+CONFIG_FILE="$SCRIPT_DIR/.ralph-config"
 
 # Verify skills source directory exists
 if [ ! -d "$SKILLS_SOURCE_DIR" ]; then
@@ -11,7 +12,50 @@ if [ ! -d "$SKILLS_SOURCE_DIR" ]; then
     exit 1
 fi
 
+# Ask which AI CLI tool they will be using
+echo "Which AI CLI tool will you be using?"
+echo "1) Claude (Default)"
+echo "2) Copilot"
+echo "3) Gemini"
+read -p "Enter your choice (1-3): " AI_TOOL_CHOICE
+
+case $AI_TOOL_CHOICE in
+    1|"")
+        AI_TOOL="claude"
+        AI_TOOL_CMD="claude --dangerously-skip-permissions"
+        GLOBAL_SKILLS_DIR=~/.claude/skills
+        LOCAL_SKILLS_SUBDIR=".claude/skills"
+        echo "Using Claude CLI"
+        ;;
+    2)
+        AI_TOOL="copilot"
+        AI_TOOL_CMD="copilot --allow-all-tools"
+        GLOBAL_SKILLS_DIR=~/.copilot/skills
+        LOCAL_SKILLS_SUBDIR=".copilot/skills"
+        echo "Using Copilot CLI"
+        ;;
+    3)
+        AI_TOOL="gemini"
+        AI_TOOL_CMD="gemini --yolo"
+        GLOBAL_SKILLS_DIR=~/.gemini/skills
+        LOCAL_SKILLS_SUBDIR=".gemini/skills"
+        echo "Using Gemini CLI"
+        ;;
+    *)
+        echo "Invalid choice. Defaulting to Claude."
+        AI_TOOL="claude"
+        AI_TOOL_CMD="claude --dangerously-skip-permissions"
+        GLOBAL_SKILLS_DIR=~/.claude/skills
+        LOCAL_SKILLS_SUBDIR=".claude/skills"
+        ;;
+esac
+
+# Save the AI tool selection to config file
+echo "AI_TOOL=$AI_TOOL" > "$CONFIG_FILE"
+echo "AI_TOOL_CMD=\"$AI_TOOL_CMD\"" >> "$CONFIG_FILE"
+
 # Ask user if they want a global install for skills or local project only
+echo ""
 echo "Where would you like to install the skills?"
 echo "1) Global (available system-wide)"
 echo "2) Local project only"
@@ -19,16 +63,16 @@ read -p "Enter your choice (1 or 2): " INSTALL_CHOICE
 
 case $INSTALL_CHOICE in
     1)
-        SKILLS_DIR=~/.claude/skills
+        SKILLS_DIR="$GLOBAL_SKILLS_DIR"
         echo "Installing skills globally to $SKILLS_DIR"
         ;;
     2)
-        SKILLS_DIR="$(pwd)/.claude/skills"
+        SKILLS_DIR="$(pwd)/$LOCAL_SKILLS_SUBDIR"
         echo "Installing skills locally to $SKILLS_DIR"
         ;;
     *)
         echo "Invalid choice. Defaulting to local installation."
-        SKILLS_DIR="$(pwd)/.claude/skills"
+        SKILLS_DIR="$(pwd)/$LOCAL_SKILLS_SUBDIR"
         ;;
 esac
 
